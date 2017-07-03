@@ -1,3 +1,4 @@
+
 public enum Enum2<T0, T1> {
     case case0(T0)
     case case1(T1)
@@ -14,7 +15,6 @@ extension Enum2: Enum2Convertible {
         return self
     }
 }
-
 public enum Enum3<T0, T1, T2> {
     case case0(T0)
     case case1(T1)
@@ -33,7 +33,6 @@ extension Enum3: Enum3Convertible {
         return self
     }
 }
-
 public enum Enum4<T0, T1, T2, T3> {
     case case0(T0)
     case case1(T1)
@@ -54,7 +53,6 @@ extension Enum4: Enum4Convertible {
         return self
     }
 }
-
 public enum Enum5<T0, T1, T2, T3, T4> {
     case case0(T0)
     case case1(T1)
