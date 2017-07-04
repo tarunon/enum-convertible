@@ -9,3 +9,4 @@ script:
   - xcodebuild test -scheme EnumConvertible -configuration Debug -sdk macosx | xcpretty -c
   - xcodebuild test -scheme EnumConvertible -configuration Debug -sdk appletvsimulator -destination "platform=tvOS Simulator,name=Apple TV 1080p" | xcpretty -c
   - swift test
+  - ENUM_CONVERTIBLE_MAX_SERIAL_NUMBER=8 ENUM_CONVERTIBLE_SPECIFIC_NUMBERS=10,15 xcodebuild test -scheme EnumConvertible -configuration Debug -sdk macosx | xcpretty -c
