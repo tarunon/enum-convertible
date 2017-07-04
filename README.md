@@ -1,6 +1,7 @@
 # EnumConvertible
 
 Protocols for enum abstraction.
+This library contains 2-5 case enum abstract protocols.
 
 ## Example
 ```swift
@@ -43,3 +44,12 @@ macOS | 10.9+
 tvOS | 9.0+
 watchOS | 2.0+
 Swift | 3.1+
+
+## Needs 6 or more cases...
+Adding environment variable `ENUM_CONVERTIBLE_MAX_SERIAL_NUMBER` then EnumConvertible.swift will contains 2-`ENUM_CONVERTIBLE_MAX_SERIAL_NUMBER` case enum protocols.
+Or, adding `ENUM_CONVERTIBLE_SPECIFIC_NUMBERS`, it should be comma separated numerics, then EnumConvertible.swift contains the specific case enum protocols.
+This project generate code using [gyb](https://github.com/tarunon/swift/blob/master/utils/gyb.py), and EnumConvertible.xcodeproj contains code generating script.
+If you use Carthage, it work well injecting custom environment variable.
+```sh
+ENUM_CONVERTIBLE_MAX_SERIAL_NUMBER=10 carthage bootstrap
+```

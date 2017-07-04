@@ -27,7 +27,6 @@
 		EB5B4F791F063E61002091C8 /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		EB5B4F7A1F063FB0002091C8 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		EB5B4F7B1F0641D4002091C8 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		EBB1667C1F09F88500064C8E /* EnumConvertible.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = EnumConvertible.xcconfig; sourceTree = "<group>"; };
 		OBJ_11 /* EnumConvertibleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumConvertibleTests.swift; sourceTree = "<group>"; };
 		OBJ_13 /* EnumConvertible.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = EnumConvertible.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_14 /* EnumConvertibleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = EnumConvertibleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -75,7 +74,6 @@
 		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
-				EBB1667C1F09F88500064C8E /* EnumConvertible.xcconfig */,
 				OBJ_6 /* Package.swift */,
 				EB5B4F791F063E61002091C8 /* .travis.yml */,
 				EB5B4F7A1F063FB0002091C8 /* README.md */,
@@ -179,7 +177,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ ! -e \"gyb\" ]; then\n    mkdir \"gyb\"\n    curl \"https://raw.githubusercontent.com/apple/swift/master/utils/gyb.py\" -o \"gyb/gyb.py\"\n    curl \"https://raw.githubusercontent.com/apple/swift/master/utils/gyb\" -o \"gyb/gyb\"\n    chmod +x gyb/gyb\nfi\n./gyb/gyb Sources/EnumConvertible.swift.gyb -o Sources/EnumConvertible.swift -D MAX_SERIAL_NUMBER=$MAX_SERIAL_NUMBER -D SPECIFIC_NUMBERS=$SPECIFIC_NUMBERS --line-directive \"\"";
+			shellScript = "if [ ! -e \"gyb\" ]; then\n    mkdir \"gyb\"\n    curl \"https://raw.githubusercontent.com/apple/swift/master/utils/gyb.py\" -o \"gyb/gyb.py\"\n    curl \"https://raw.githubusercontent.com/apple/swift/master/utils/gyb\" -o \"gyb/gyb\"\n    chmod +x gyb/gyb\nfi\nif [ \"$ENUM_CONVERTIBLE_MAX_SERIAL_NUMBER\" == \"\" ]; then\n    ENUM_CONVERTIBLE_MAX_SERIAL_NUMBER=\"5\"\nfi\n./gyb/gyb Sources/EnumConvertible.swift.gyb -o Sources/EnumConvertible.swift -D MAX_SERIAL_NUMBER=$ENUM_CONVERTIBLE_MAX_SERIAL_NUMBER -D SPECIFIC_NUMBERS=$ENUM_CONVERTIBLE_SPECIFIC_NUMBERS --line-directive \"\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -297,7 +295,6 @@
 		};
 		OBJ_3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EBB1667C1F09F88500064C8E /* EnumConvertible.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -321,7 +318,6 @@
 		};
 		OBJ_4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EBB1667C1F09F88500064C8E /* EnumConvertible.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
