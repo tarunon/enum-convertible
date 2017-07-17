@@ -3,10 +3,30 @@
         return j.join(xs)
     def enumerateT(n):
         return join(["T{}".format(i) for i in range(n)])
+    def combineN(n, c):
+        if c == n - 1:
+            return [[], [n - c - 1]]
+        else:
+            return [x + t for t in [[], [n - c - 1]] for x in combineN(n, c + 1)]
+    def constraintN(n, ts):
+        all = range(n)
+        ns = list(set(all) - set(ts))
+        res = ["T{} == Never".format(i) for i in ns]
+        res += ["T{} == T{}".format(ts[0], i) for i in ts[1:]]
+        return ["where " + res[0]] + [", " + x for x in res[1:]]
+
     enumNumbers = range(2, int(MAX_SERIAL_NUMBER) + 1)
     if len(SPECIFIC_NUMBERS) > 0:
         enumNumbers += [int(s) for s in SPECIFIC_NUMBERS.split(',')]
 }%
+
+func just<T>(_ arg: T) -> T {
+    return arg
+}
+
+func just<T>(_ arg: Never) -> T {
+    fatalError()
+}
 
 % for enumNumber in enumNumbers:
 public enum Enum${enumNumber}<${enumerateT(enumNumber)}> {
@@ -27,4 +47,22 @@ extension Enum${enumNumber}: Enum${enumNumber}Convertible {
         return self
     }
 }
+
+    % for combs in combineN(enumNumber, 0)[1:]:
+extension Enum${enumNumber}Convertible
+        % for constraints in constraintN(enumNumber, combs):
+    ${constraints}
+        % end
+{
+    func flatten() -> ${"T{}".format(combs[0])} {
+        switch self.asEnum {
+        % for caseNumber in range(enumNumber):
+            case .case${caseNumber}(let x): return just(x)
+        % end
+        }
+    }
+}
+
+    % end
 % end
+
