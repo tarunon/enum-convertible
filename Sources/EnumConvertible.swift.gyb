@@ -38,7 +38,7 @@ extension Enum${enumNumber}Convertible
     ${constraints}
     % end
 {
-    func flatten() -> T0 {
+    public func flatten() -> T0 {
         switch self.asEnum {
     % for caseNumber in range(enumNumber):
             case .case${caseNumber}(let x): return x
