@@ -3,6 +3,11 @@
         return j.join(xs)
     def enumerateT(n):
         return join(["T{}".format(i) for i in range(n)])
+    def constraintN(n):
+        all = range(n)
+        res = ["T{} == T{}".format(all[0], i) for i in all[1:]]
+        return ["where " + res[0]] + [", " + x for x in res[1:]]
+
     enumNumbers = range(2, int(MAX_SERIAL_NUMBER) + 1)
     if len(SPECIFIC_NUMBERS) > 0:
         enumNumbers += [int(s) for s in SPECIFIC_NUMBERS.split(',')]
@@ -27,4 +32,21 @@ extension Enum${enumNumber}: Enum${enumNumber}Convertible {
         return self
     }
 }
+
+extension Enum${enumNumber}Convertible
+    % for constraints in constraintN(enumNumber):
+    ${constraints}
+    % end
+{
+    func flatten() -> T0 {
+        switch self.asEnum {
+    % for caseNumber in range(enumNumber):
+            case .case${caseNumber}(let x): return x
+    % end
+        }
+    }
+}
+
+    % end
 % end
+

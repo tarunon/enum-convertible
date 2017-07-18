@@ -15,6 +15,18 @@ extension Enum2: Enum2Convertible {
         return self
     }
 }
+
+extension Enum2Convertible
+    where T0 == T1
+{
+    func flatten() -> T0 {
+        switch self.asEnum {
+            case .case0(let x): return x
+            case .case1(let x): return x
+        }
+    }
+}
+
 public enum Enum3<T0, T1, T2> {
     case case0(T0)
     case case1(T1)
@@ -33,6 +45,20 @@ extension Enum3: Enum3Convertible {
         return self
     }
 }
+
+extension Enum3Convertible
+    where T0 == T1
+    , T0 == T2
+{
+    func flatten() -> T0 {
+        switch self.asEnum {
+            case .case0(let x): return x
+            case .case1(let x): return x
+            case .case2(let x): return x
+        }
+    }
+}
+
 public enum Enum4<T0, T1, T2, T3> {
     case case0(T0)
     case case1(T1)
@@ -53,6 +79,22 @@ extension Enum4: Enum4Convertible {
         return self
     }
 }
+
+extension Enum4Convertible
+    where T0 == T1
+    , T0 == T2
+    , T0 == T3
+{
+    func flatten() -> T0 {
+        switch self.asEnum {
+            case .case0(let x): return x
+            case .case1(let x): return x
+            case .case2(let x): return x
+            case .case3(let x): return x
+        }
+    }
+}
+
 public enum Enum5<T0, T1, T2, T3, T4> {
     case case0(T0)
     case case1(T1)
@@ -75,3 +117,21 @@ extension Enum5: Enum5Convertible {
         return self
     }
 }
+
+extension Enum5Convertible
+    where T0 == T1
+    , T0 == T2
+    , T0 == T3
+    , T0 == T4
+{
+    func flatten() -> T0 {
+        switch self.asEnum {
+            case .case0(let x): return x
+            case .case1(let x): return x
+            case .case2(let x): return x
+            case .case3(let x): return x
+            case .case4(let x): return x
+        }
+    }
+}
+
