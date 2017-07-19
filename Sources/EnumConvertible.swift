@@ -1,5 +1,5 @@
 
-public enum Enum2<T0, T1> {
+public enum AnyEnum2<T0, T1> {
     case case0(T0)
     case case1(T1)
 }
@@ -7,11 +7,11 @@ public enum Enum2<T0, T1> {
 public protocol Enum2Convertible {
     associatedtype T0
     associatedtype T1
-    var asEnum: Enum2<T0, T1> { get }
+    var asEnum: AnyEnum2<T0, T1> { get }
 }
 
-extension Enum2: Enum2Convertible {
-    public var asEnum: Enum2 {
+extension AnyEnum2: Enum2Convertible {
+    public var asEnum: AnyEnum2 {
         return self
     }
 }
@@ -19,7 +19,7 @@ extension Enum2: Enum2Convertible {
 extension Enum2Convertible
     where T0 == T1
 {
-    func flatten() -> T0 {
+    public func flatten() -> T0 {
         switch self.asEnum {
             case .case0(let x): return x
             case .case1(let x): return x
@@ -27,7 +27,24 @@ extension Enum2Convertible
     }
 }
 
-public enum Enum3<T0, T1, T2> {
+extension Enum2Convertible {
+    public func map0<T>(_ f: (T0) throws -> T) rethrows -> AnyEnum2<T, T1> {
+        switch self.asEnum {
+        case .case0(let x): return try .case0(f(x))
+        case .case1(let x): return .case1(x)
+        }
+    }
+
+    public func map1<T>(_ f: (T1) throws -> T) rethrows -> AnyEnum2<T0, T> {
+        switch self.asEnum {
+        case .case0(let x): return .case0(x)
+        case .case1(let x): return try .case1(f(x))
+        }
+    }
+
+}
+
+public enum AnyEnum3<T0, T1, T2> {
     case case0(T0)
     case case1(T1)
     case case2(T2)
@@ -37,11 +54,11 @@ public protocol Enum3Convertible {
     associatedtype T0
     associatedtype T1
     associatedtype T2
-    var asEnum: Enum3<T0, T1, T2> { get }
+    var asEnum: AnyEnum3<T0, T1, T2> { get }
 }
 
-extension Enum3: Enum3Convertible {
-    public var asEnum: Enum3 {
+extension AnyEnum3: Enum3Convertible {
+    public var asEnum: AnyEnum3 {
         return self
     }
 }
@@ -50,7 +67,7 @@ extension Enum3Convertible
     where T0 == T1
     , T0 == T2
 {
-    func flatten() -> T0 {
+    public func flatten() -> T0 {
         switch self.asEnum {
             case .case0(let x): return x
             case .case1(let x): return x
@@ -59,7 +76,34 @@ extension Enum3Convertible
     }
 }
 
-public enum Enum4<T0, T1, T2, T3> {
+extension Enum3Convertible {
+    public func map0<T>(_ f: (T0) throws -> T) rethrows -> AnyEnum3<T, T1, T2> {
+        switch self.asEnum {
+        case .case0(let x): return try .case0(f(x))
+        case .case1(let x): return .case1(x)
+        case .case2(let x): return .case2(x)
+        }
+    }
+
+    public func map1<T>(_ f: (T1) throws -> T) rethrows -> AnyEnum3<T0, T, T2> {
+        switch self.asEnum {
+        case .case0(let x): return .case0(x)
+        case .case1(let x): return try .case1(f(x))
+        case .case2(let x): return .case2(x)
+        }
+    }
+
+    public func map2<T>(_ f: (T2) throws -> T) rethrows -> AnyEnum3<T0, T1, T> {
+        switch self.asEnum {
+        case .case0(let x): return .case0(x)
+        case .case1(let x): return .case1(x)
+        case .case2(let x): return try .case2(f(x))
+        }
+    }
+
+}
+
+public enum AnyEnum4<T0, T1, T2, T3> {
     case case0(T0)
     case case1(T1)
     case case2(T2)
@@ -71,11 +115,11 @@ public protocol Enum4Convertible {
     associatedtype T1
     associatedtype T2
     associatedtype T3
-    var asEnum: Enum4<T0, T1, T2, T3> { get }
+    var asEnum: AnyEnum4<T0, T1, T2, T3> { get }
 }
 
-extension Enum4: Enum4Convertible {
-    public var asEnum: Enum4 {
+extension AnyEnum4: Enum4Convertible {
+    public var asEnum: AnyEnum4 {
         return self
     }
 }
@@ -85,7 +129,7 @@ extension Enum4Convertible
     , T0 == T2
     , T0 == T3
 {
-    func flatten() -> T0 {
+    public func flatten() -> T0 {
         switch self.asEnum {
             case .case0(let x): return x
             case .case1(let x): return x
@@ -95,7 +139,46 @@ extension Enum4Convertible
     }
 }
 
-public enum Enum5<T0, T1, T2, T3, T4> {
+extension Enum4Convertible {
+    public func map0<T>(_ f: (T0) throws -> T) rethrows -> AnyEnum4<T, T1, T2, T3> {
+        switch self.asEnum {
+        case .case0(let x): return try .case0(f(x))
+        case .case1(let x): return .case1(x)
+        case .case2(let x): return .case2(x)
+        case .case3(let x): return .case3(x)
+        }
+    }
+
+    public func map1<T>(_ f: (T1) throws -> T) rethrows -> AnyEnum4<T0, T, T2, T3> {
+        switch self.asEnum {
+        case .case0(let x): return .case0(x)
+        case .case1(let x): return try .case1(f(x))
+        case .case2(let x): return .case2(x)
+        case .case3(let x): return .case3(x)
+        }
+    }
+
+    public func map2<T>(_ f: (T2) throws -> T) rethrows -> AnyEnum4<T0, T1, T, T3> {
+        switch self.asEnum {
+        case .case0(let x): return .case0(x)
+        case .case1(let x): return .case1(x)
+        case .case2(let x): return try .case2(f(x))
+        case .case3(let x): return .case3(x)
+        }
+    }
+
+    public func map3<T>(_ f: (T3) throws -> T) rethrows -> AnyEnum4<T0, T1, T2, T> {
+        switch self.asEnum {
+        case .case0(let x): return .case0(x)
+        case .case1(let x): return .case1(x)
+        case .case2(let x): return .case2(x)
+        case .case3(let x): return try .case3(f(x))
+        }
+    }
+
+}
+
+public enum AnyEnum5<T0, T1, T2, T3, T4> {
     case case0(T0)
     case case1(T1)
     case case2(T2)
@@ -109,11 +192,11 @@ public protocol Enum5Convertible {
     associatedtype T2
     associatedtype T3
     associatedtype T4
-    var asEnum: Enum5<T0, T1, T2, T3, T4> { get }
+    var asEnum: AnyEnum5<T0, T1, T2, T3, T4> { get }
 }
 
-extension Enum5: Enum5Convertible {
-    public var asEnum: Enum5 {
+extension AnyEnum5: Enum5Convertible {
+    public var asEnum: AnyEnum5 {
         return self
     }
 }
@@ -124,7 +207,7 @@ extension Enum5Convertible
     , T0 == T3
     , T0 == T4
 {
-    func flatten() -> T0 {
+    public func flatten() -> T0 {
         switch self.asEnum {
             case .case0(let x): return x
             case .case1(let x): return x
@@ -135,3 +218,67 @@ extension Enum5Convertible
     }
 }
 
+extension Enum5Convertible {
+    public func map0<T>(_ f: (T0) throws -> T) rethrows -> AnyEnum5<T, T1, T2, T3, T4> {
+        switch self.asEnum {
+        case .case0(let x): return try .case0(f(x))
+        case .case1(let x): return .case1(x)
+        case .case2(let x): return .case2(x)
+        case .case3(let x): return .case3(x)
+        case .case4(let x): return .case4(x)
+        }
+    }
+
+    public func map1<T>(_ f: (T1) throws -> T) rethrows -> AnyEnum5<T0, T, T2, T3, T4> {
+        switch self.asEnum {
+        case .case0(let x): return .case0(x)
+        case .case1(let x): return try .case1(f(x))
+        case .case2(let x): return .case2(x)
+        case .case3(let x): return .case3(x)
+        case .case4(let x): return .case4(x)
+        }
+    }
+
+    public func map2<T>(_ f: (T2) throws -> T) rethrows -> AnyEnum5<T0, T1, T, T3, T4> {
+        switch self.asEnum {
+        case .case0(let x): return .case0(x)
+        case .case1(let x): return .case1(x)
+        case .case2(let x): return try .case2(f(x))
+        case .case3(let x): return .case3(x)
+        case .case4(let x): return .case4(x)
+        }
+    }
+
+    public func map3<T>(_ f: (T3) throws -> T) rethrows -> AnyEnum5<T0, T1, T2, T, T4> {
+        switch self.asEnum {
+        case .case0(let x): return .case0(x)
+        case .case1(let x): return .case1(x)
+        case .case2(let x): return .case2(x)
+        case .case3(let x): return try .case3(f(x))
+        case .case4(let x): return .case4(x)
+        }
+    }
+
+    public func map4<T>(_ f: (T4) throws -> T) rethrows -> AnyEnum5<T0, T1, T2, T3, T> {
+        switch self.asEnum {
+        case .case0(let x): return .case0(x)
+        case .case1(let x): return .case1(x)
+        case .case2(let x): return .case2(x)
+        case .case3(let x): return .case3(x)
+        case .case4(let x): return try .case4(f(x))
+        }
+    }
+
+}
+
+
+// MARK: deprecated
+
+@available(*, deprecated, renamed: "AnyEnum2")
+public typealias Enum2<T0, T1> = AnyEnum2<T0, T1>
+@available(*, deprecated, renamed: "AnyEnum3")
+public typealias Enum3<T0, T1, T2> = AnyEnum3<T0, T1, T2>
+@available(*, deprecated, renamed: "AnyEnum4")
+public typealias Enum4<T0, T1, T2, T3> = AnyEnum4<T0, T1, T2, T3>
+@available(*, deprecated, renamed: "AnyEnum5")
+public typealias Enum5<T0, T1, T2, T3, T4> = AnyEnum5<T0, T1, T2, T3, T4>

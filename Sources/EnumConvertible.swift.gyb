@@ -7,6 +7,8 @@
         all = range(n)
         res = ["T{} == T{}".format(all[0], i) for i in all[1:]]
         return ["where " + res[0]] + [", " + x for x in res[1:]]
+    def mapReturnType(enumNumber, caseNumber):
+        return "AnyEnum{}<{}>".format(enumNumber, ", ".join(["T{}".format(i) if i != caseNumber else "T" for i in range(enumNumber)]))
 
     enumNumbers = range(2, int(MAX_SERIAL_NUMBER) + 1)
     if len(SPECIFIC_NUMBERS) > 0:
@@ -14,7 +16,7 @@
 }%
 
 % for enumNumber in enumNumbers:
-public enum Enum${enumNumber}<${enumerateT(enumNumber)}> {
+public enum AnyEnum${enumNumber}<${enumerateT(enumNumber)}> {
     % for caseNumber in range(enumNumber):
     case case${caseNumber}(T${caseNumber})
     % end
@@ -24,11 +26,11 @@ public protocol Enum${enumNumber}Convertible {
     % for caseNumber in range(enumNumber):
     associatedtype T${caseNumber}
     % end
-    var asEnum: Enum${enumNumber}<${enumerateT(enumNumber)}> { get }
+    var asEnum: AnyEnum${enumNumber}<${enumerateT(enumNumber)}> { get }
 }
 
-extension Enum${enumNumber}: Enum${enumNumber}Convertible {
-    public var asEnum: Enum${enumNumber} {
+extension AnyEnum${enumNumber}: Enum${enumNumber}Convertible {
+    public var asEnum: AnyEnum${enumNumber} {
         return self
     }
 }
@@ -47,6 +49,28 @@ extension Enum${enumNumber}Convertible
     }
 }
 
+extension Enum${enumNumber}Convertible {
+    % for caseNumber in range(enumNumber):
+    public func map${caseNumber}<T>(_ f: (T${caseNumber}) throws -> T) rethrows -> ${mapReturnType(enumNumber, caseNumber)} {
+        switch self.asEnum {
+        % for caseNumber2 in range(enumNumber):
+            % if caseNumber == caseNumber2:
+        case .case${caseNumber2}(let x): return try .case${caseNumber2}(f(x))
+            % else:
+        case .case${caseNumber2}(let x): return .case${caseNumber2}(x)
+            % end
+        % end
+        }
+    }
+
     % end
+}
+
 % end
 
+// MARK: deprecated
+
+% for enumNumber in enumNumbers:
+@available(*, deprecated, renamed: "AnyEnum${enumNumber}")
+public typealias Enum${enumNumber}<${enumerateT(enumNumber)}> = AnyEnum${enumNumber}<${enumerateT(enumNumber)}>
+% end
