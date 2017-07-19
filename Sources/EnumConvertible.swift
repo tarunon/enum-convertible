@@ -2,6 +2,13 @@
 public enum AnyEnum2<T0, T1> {
     case case0(T0)
     case case1(T1)
+
+    public init<E: Enum2Convertible>(_ source: E)
+        where T0 == E.T0
+        , T1 == E.T1
+    {
+        self = source.asEnum
+    }
 }
 
 public protocol Enum2Convertible {
@@ -19,7 +26,7 @@ extension AnyEnum2: Enum2Convertible {
 extension Enum2Convertible
     where T0 == T1
 {
-    public func flatten() -> T0 {
+    public func unwrapped() -> T0 {
         switch self.asEnum {
             case .case0(let x): return x
             case .case1(let x): return x
@@ -48,6 +55,14 @@ public enum AnyEnum3<T0, T1, T2> {
     case case0(T0)
     case case1(T1)
     case case2(T2)
+
+    public init<E: Enum3Convertible>(_ source: E)
+        where T0 == E.T0
+        , T1 == E.T1
+        , T2 == E.T2
+    {
+        self = source.asEnum
+    }
 }
 
 public protocol Enum3Convertible {
@@ -67,7 +82,7 @@ extension Enum3Convertible
     where T0 == T1
     , T0 == T2
 {
-    public func flatten() -> T0 {
+    public func unwrapped() -> T0 {
         switch self.asEnum {
             case .case0(let x): return x
             case .case1(let x): return x
@@ -108,6 +123,15 @@ public enum AnyEnum4<T0, T1, T2, T3> {
     case case1(T1)
     case case2(T2)
     case case3(T3)
+
+    public init<E: Enum4Convertible>(_ source: E)
+        where T0 == E.T0
+        , T1 == E.T1
+        , T2 == E.T2
+        , T3 == E.T3
+    {
+        self = source.asEnum
+    }
 }
 
 public protocol Enum4Convertible {
@@ -129,7 +153,7 @@ extension Enum4Convertible
     , T0 == T2
     , T0 == T3
 {
-    public func flatten() -> T0 {
+    public func unwrapped() -> T0 {
         switch self.asEnum {
             case .case0(let x): return x
             case .case1(let x): return x
@@ -184,6 +208,16 @@ public enum AnyEnum5<T0, T1, T2, T3, T4> {
     case case2(T2)
     case case3(T3)
     case case4(T4)
+
+    public init<E: Enum5Convertible>(_ source: E)
+        where T0 == E.T0
+        , T1 == E.T1
+        , T2 == E.T2
+        , T3 == E.T3
+        , T4 == E.T4
+    {
+        self = source.asEnum
+    }
 }
 
 public protocol Enum5Convertible {
@@ -207,7 +241,7 @@ extension Enum5Convertible
     , T0 == T3
     , T0 == T4
 {
-    public func flatten() -> T0 {
+    public func unwrapped() -> T0 {
         switch self.asEnum {
             case .case0(let x): return x
             case .case1(let x): return x

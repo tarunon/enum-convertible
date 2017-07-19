@@ -74,13 +74,13 @@ class EnumConvertibleTests: XCTestCase {
     func testEnum2() {
         let int = 100
         let str = "abc"
-        switch (MyEnum2.int(int).asEnum, MyEnum2.int(int).asEnum.asEnum) {
+        switch (AnyEnum2(MyEnum2.int(int)), AnyEnum2(AnyEnum2(MyEnum2.int(int)))) {
         case (.case0(let x), .case0(let y)) where x == int && x == y:
             break
         default:
             XCTFail()
         }
-        switch (MyEnum2.str(str).asEnum, MyEnum2.str(str).asEnum.asEnum) {
+        switch (AnyEnum2(MyEnum2.str(str)), AnyEnum2(MyEnum2.str(str))) {
         case (.case1(let x), .case1(let y)) where x == str && x == y:
             break
         default:
@@ -92,19 +92,19 @@ class EnumConvertibleTests: XCTestCase {
         let int = 100
         let str = "abc"
         let double = 3.14
-        switch (MyEnum3.int(int).asEnum, MyEnum3.int(int).asEnum.asEnum) {
+        switch (AnyEnum3(MyEnum3.int(int)), AnyEnum3(AnyEnum3(MyEnum3.int(int)))) {
         case (.case0(let x), .case0(let y)) where x == int && x == y:
             break
         default:
             XCTFail()
         }
-        switch (MyEnum3.str(str).asEnum, MyEnum3.str(str).asEnum.asEnum) {
+        switch (AnyEnum3(MyEnum3.str(str)), AnyEnum3(AnyEnum3(MyEnum3.str(str)))) {
         case (.case1(let x), .case1(let y)) where x == str && x == y:
             break
         default:
             XCTFail()
         }
-        switch (MyEnum3.double(double).asEnum, MyEnum3.double(double).asEnum.asEnum) {
+        switch (AnyEnum3(MyEnum3.double(double)), AnyEnum3(AnyEnum3(MyEnum3.double(double)))) {
         case (.case2(let x), .case2(let y)) where x == double && x == y:
             break
         default:
@@ -117,25 +117,25 @@ class EnumConvertibleTests: XCTestCase {
         let str = "abc"
         let double = 3.14
         let array = [1, 2, 3]
-        switch (MyEnum4.int(int).asEnum, MyEnum4.int(int).asEnum.asEnum) {
+        switch (AnyEnum4(MyEnum4.int(int)), AnyEnum4(AnyEnum4(MyEnum4.int(int)))) {
         case (.case0(let x), .case0(let y)) where x == int && x == y:
             break
         default:
             XCTFail()
         }
-        switch (MyEnum4.str(str).asEnum, MyEnum4.str(str).asEnum.asEnum) {
+        switch (AnyEnum4(MyEnum4.str(str)), AnyEnum4(AnyEnum4(MyEnum4.str(str)))) {
         case (.case1(let x), .case1(let y)) where x == str && x == y:
             break
         default:
             XCTFail()
         }
-        switch (MyEnum4.double(double).asEnum, MyEnum4.double(double).asEnum.asEnum) {
+        switch (AnyEnum4(MyEnum4.double(double)), AnyEnum4(AnyEnum4(MyEnum4.double(double)))) {
         case (.case2(let x), .case2(let y)) where x == double && x == y:
             break
         default:
             XCTFail()
         }
-        switch (MyEnum4.array(array).asEnum, MyEnum4.array(array).asEnum.asEnum) {
+        switch (AnyEnum4(MyEnum4.array(array)), AnyEnum4(AnyEnum4(MyEnum4.array(array)))) {
         case (.case3(let x), .case3(let y)) where x == array && x == y:
             break
         default:
@@ -149,32 +149,75 @@ class EnumConvertibleTests: XCTestCase {
         let double = 3.14
         let array = [1, 2, 3]
         let dictionary = ["a": 0, "b": 200]
-        switch (MyEnum5.int(int).asEnum, MyEnum5.int(int).asEnum.asEnum) {
+        switch (AnyEnum5(MyEnum5.int(int)), AnyEnum5(AnyEnum5(MyEnum5.int(int)))) {
         case (.case0(let x), .case0(let y)) where x == int && x == y:
             break
         default:
             XCTFail()
         }
-        switch (MyEnum5.str(str).asEnum, MyEnum5.str(str).asEnum.asEnum) {
+        switch (AnyEnum5(MyEnum5.str(str)), AnyEnum5(AnyEnum5(MyEnum5.str(str)))) {
         case (.case1(let x), .case1(let y)) where x == str && x == y:
             break
         default:
             XCTFail()
         }
-        switch (MyEnum5.double(double).asEnum, MyEnum5.double(double).asEnum.asEnum) {
+        switch (AnyEnum5(MyEnum5.double(double)), AnyEnum5(AnyEnum5(MyEnum5.double(double)))) {
         case (.case2(let x), .case2(let y)) where x == double && x == y:
             break
         default:
             XCTFail()
         }
-        switch (MyEnum5.array(array).asEnum, MyEnum5.array(array).asEnum.asEnum) {
+        switch (AnyEnum5(MyEnum5.array(array)), AnyEnum5(AnyEnum5(MyEnum5.array(array)))) {
         case (.case3(let x), .case3(let y)) where x == array && x == y:
             break
         default:
             XCTFail()
         }
-        switch (MyEnum5.dictionary(dictionary).asEnum, MyEnum5.dictionary(dictionary).asEnum.asEnum) {
+        switch (AnyEnum5(MyEnum5.dictionary(dictionary)), AnyEnum5(AnyEnum5(MyEnum5.dictionary(dictionary)))) {
         case (.case4(let x), .case4(let y)) where x == dictionary && x == y:
+            break
+        default:
+            XCTFail()
+        }
+    }
+
+    func testUnwrapped() {
+        let enum2_1 = AnyEnum2<Int, Int>.case0(200)
+        switch (enum2_1) {
+        case .case0(let x) where x == enum2_1.unwrapped():
+            break
+        default:
+            XCTFail()
+        }
+
+        let enum2_2 = AnyEnum2<Int, Int>.case1(200)
+        switch (enum2_2) {
+        case .case1(let x) where x == enum2_2.unwrapped():
+            break
+        default:
+            XCTFail()
+        }
+    }
+
+    func testMap() {
+        let enum3 = AnyEnum3<Int, Float, Double>.case0(200)
+        let mappedEnum3_1 = enum3.map0 { "\($0)" }
+        let mappedEnum3_2 = enum3.map1 { "\($0)" }
+        let mappedEnum3_3 = enum3.map2 { "\($0)" }
+        switch mappedEnum3_1 {
+        case .case0(let x) where x == "200":
+            break
+        default:
+            XCTFail()
+        }
+        switch mappedEnum3_2 {
+        case .case0(let x) where x == 200:
+            break
+        default:
+            XCTFail()
+        }
+        switch mappedEnum3_3 {
+        case .case0(let x) where x == 200:
             break
         default:
             XCTFail()
