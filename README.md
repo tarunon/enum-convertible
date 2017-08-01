@@ -6,7 +6,7 @@ This library contains 2-5 case enum abstract protocols.
 ## Example
 ```swift
 extension MyEnumIntOrString: Enum2Convertible {
-  var asEnum: Enum2<Int, String> {
+  var asEnum: AnyEnum2<Int, String> {
     ...
   }
 }
