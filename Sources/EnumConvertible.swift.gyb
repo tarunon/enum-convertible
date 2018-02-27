@@ -78,6 +78,34 @@ extension Enum${enumNumber}Convertible {
     % end
 }
 
+extension Enum${enumNumber}Convertible where Self: Equatable
+    % for caseNumber in range(enumNumber):
+    , T${caseNumber}: Equatable
+    % end
+{
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        switch (lhs.asEnum, rhs.asEnum) {
+    % for caseNumber in range(enumNumber):
+        case (.case${caseNumber}(let lhsv), .case${caseNumber}(let rhsv)):
+            return lhsv == rhsv
+    % end
+        default:
+            return false
+        }
+    }
+}
+
+#if swift(>=4.1)
+
+extension AnyEnum${enumNumber}: Equatable
+    where T0: Equatable
+    % for caseNumber in range(enumNumber-1):
+    , T${caseNumber+1}: Equatable
+    % end
+{}
+
+#endif
+
 % end
 
 // MARK: deprecated

@@ -51,6 +51,31 @@ extension Enum2Convertible {
 
 }
 
+extension Enum2Convertible where Self: Equatable
+    , T0: Equatable
+    , T1: Equatable
+{
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        switch (lhs.asEnum, rhs.asEnum) {
+        case (.case0(let lhsv), .case0(let rhsv)):
+            return lhsv == rhsv
+        case (.case1(let lhsv), .case1(let rhsv)):
+            return lhsv == rhsv
+        default:
+            return false
+        }
+    }
+}
+
+#if swift(>=4.1)
+
+extension AnyEnum2: Equatable
+    where T0: Equatable
+    , T1: Equatable
+{}
+
+#endif
+
 public enum AnyEnum3<T0, T1, T2> {
     case case0(T0)
     case case1(T1)
@@ -117,6 +142,35 @@ extension Enum3Convertible {
     }
 
 }
+
+extension Enum3Convertible where Self: Equatable
+    , T0: Equatable
+    , T1: Equatable
+    , T2: Equatable
+{
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        switch (lhs.asEnum, rhs.asEnum) {
+        case (.case0(let lhsv), .case0(let rhsv)):
+            return lhsv == rhsv
+        case (.case1(let lhsv), .case1(let rhsv)):
+            return lhsv == rhsv
+        case (.case2(let lhsv), .case2(let rhsv)):
+            return lhsv == rhsv
+        default:
+            return false
+        }
+    }
+}
+
+#if swift(>=4.1)
+
+extension AnyEnum3: Equatable
+    where T0: Equatable
+    , T1: Equatable
+    , T2: Equatable
+{}
+
+#endif
 
 public enum AnyEnum4<T0, T1, T2, T3> {
     case case0(T0)
@@ -201,6 +255,39 @@ extension Enum4Convertible {
     }
 
 }
+
+extension Enum4Convertible where Self: Equatable
+    , T0: Equatable
+    , T1: Equatable
+    , T2: Equatable
+    , T3: Equatable
+{
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        switch (lhs.asEnum, rhs.asEnum) {
+        case (.case0(let lhsv), .case0(let rhsv)):
+            return lhsv == rhsv
+        case (.case1(let lhsv), .case1(let rhsv)):
+            return lhsv == rhsv
+        case (.case2(let lhsv), .case2(let rhsv)):
+            return lhsv == rhsv
+        case (.case3(let lhsv), .case3(let rhsv)):
+            return lhsv == rhsv
+        default:
+            return false
+        }
+    }
+}
+
+#if swift(>=4.1)
+
+extension AnyEnum4: Equatable
+    where T0: Equatable
+    , T1: Equatable
+    , T2: Equatable
+    , T3: Equatable
+{}
+
+#endif
 
 public enum AnyEnum5<T0, T1, T2, T3, T4> {
     case case0(T0)
@@ -304,6 +391,43 @@ extension Enum5Convertible {
     }
 
 }
+
+extension Enum5Convertible where Self: Equatable
+    , T0: Equatable
+    , T1: Equatable
+    , T2: Equatable
+    , T3: Equatable
+    , T4: Equatable
+{
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        switch (lhs.asEnum, rhs.asEnum) {
+        case (.case0(let lhsv), .case0(let rhsv)):
+            return lhsv == rhsv
+        case (.case1(let lhsv), .case1(let rhsv)):
+            return lhsv == rhsv
+        case (.case2(let lhsv), .case2(let rhsv)):
+            return lhsv == rhsv
+        case (.case3(let lhsv), .case3(let rhsv)):
+            return lhsv == rhsv
+        case (.case4(let lhsv), .case4(let rhsv)):
+            return lhsv == rhsv
+        default:
+            return false
+        }
+    }
+}
+
+#if swift(>=4.1)
+
+extension AnyEnum5: Equatable
+    where T0: Equatable
+    , T1: Equatable
+    , T2: Equatable
+    , T3: Equatable
+    , T4: Equatable
+{}
+
+#endif
 
 
 // MARK: deprecated
