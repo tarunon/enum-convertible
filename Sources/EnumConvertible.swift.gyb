@@ -30,7 +30,7 @@ public enum AnyEnum${enumNumber}<${enumerateT(enumNumber)}> {
         ${constraint}
     % end
     {
-        self = source.asEnum
+        self = source.asEnum()
     }
 }
 
@@ -38,11 +38,11 @@ public protocol Enum${enumNumber}Convertible {
     % for caseNumber in range(enumNumber):
     associatedtype T${caseNumber}
     % end
-    var asEnum: AnyEnum${enumNumber}<${enumerateT(enumNumber)}> { get }
+    func asEnum() -> AnyEnum${enumNumber}<${enumerateT(enumNumber)}>
 }
 
 extension AnyEnum${enumNumber}: Enum${enumNumber}Convertible {
-    public var asEnum: AnyEnum${enumNumber} {
+    public func asEnum() -> AnyEnum${enumNumber} {
         return self
     }
 }
@@ -53,7 +53,7 @@ extension Enum${enumNumber}Convertible
     % end
 {
     public func unwrapped() -> T0 {
-        switch self.asEnum {
+        switch self.asEnum() {
     % for caseNumber in range(enumNumber):
             case .case${caseNumber}(let x): return x
     % end
@@ -64,7 +64,7 @@ extension Enum${enumNumber}Convertible
 extension Enum${enumNumber}Convertible {
     % for caseNumber in range(enumNumber):
     public func map${caseNumber}<T>(_ f: (T${caseNumber}) throws -> T) rethrows -> ${mapReturnType(enumNumber, caseNumber)} {
-        switch self.asEnum {
+        switch self.asEnum() {
         % for caseNumber2 in range(enumNumber):
             % if caseNumber == caseNumber2:
         case .case${caseNumber2}(let x): return try .case${caseNumber2}(f(x))
@@ -84,7 +84,7 @@ extension Enum${enumNumber}Convertible where Self: Equatable
     % end
 {
     public static func == (lhs: Self, rhs: Self) -> Bool {
-        switch (lhs.asEnum, rhs.asEnum) {
+        switch (lhs.asEnum(), rhs.asEnum()) {
     % for caseNumber in range(enumNumber):
         case (.case${caseNumber}(let lhsv), .case${caseNumber}(let rhsv)):
             return lhsv == rhsv
