@@ -7,7 +7,7 @@ enum MyEnum2 {
 }
 
 extension MyEnum2: Enum2Convertible {
-    var asEnum: AnyEnum2<Int, String> {
+    func asEnum() -> AnyEnum2<Int, String> {
         switch self {
         case .int(let int): return .case0(int)
         case .str(let str): return .case1(str)
@@ -22,7 +22,7 @@ enum MyEnum3 {
 }
 
 extension MyEnum3: Enum3Convertible {
-    var asEnum: AnyEnum3<Int, String, Double> {
+    func asEnum() -> AnyEnum3<Int, String, Double> {
         switch self {
         case .int(let int): return .case0(int)
         case .str(let str): return .case1(str)
@@ -39,7 +39,7 @@ enum MyEnum4 {
 }
 
 extension MyEnum4: Enum4Convertible {
-    var asEnum: AnyEnum4<Int, String, Double, [Int]> {
+    func asEnum() -> AnyEnum4<Int, String, Double, [Int]> {
         switch self {
         case .int(let int): return .case0(int)
         case .str(let str): return .case1(str)
@@ -58,7 +58,7 @@ enum MyEnum5 {
 }
 
 extension MyEnum5: Enum5Convertible {
-    var asEnum: AnyEnum5<Int, String, Double, [Int], [String: Int]> {
+    func asEnum() -> AnyEnum5<Int, String, Double, [Int], [String: Int]> {
         switch self {
         case .int(let int): return .case0(int)
         case .str(let str): return .case1(str)
@@ -223,11 +223,37 @@ class EnumConvertibleTests: XCTestCase {
             XCTFail()
         }
     }
+    
+    #if swift(>=4.1)
+    
+    func testEquatable() {
+        let enum2a = AnyEnum2<Int, String>.case0(1)
+        let enum2b = AnyEnum2<Int, String>.case0(1)
+        let enum2c = AnyEnum2<Int, String>.case1("1")
+        XCTAssertEqual(enum2a, enum2b)
+        XCTAssertNotEqual(enum2a, enum2c)
+    }
+    
+    #endif
 
+    #if swift(>=4.1)
     static var allTests = [
         ("testEnum2", testEnum2),
         ("testEnum3", testEnum3),
         ("testEnum4", testEnum4),
         ("testEnum5", testEnum5),
+        ("testUnwrapped", testUnwrapped),
+        ("testMap", testMap),
+        ("testEquatable", testEquatable),
     ]
+    #else
+    static var allTests = [
+        ("testEnum2", testEnum2),
+        ("testEnum3", testEnum3),
+        ("testEnum4", testEnum4),
+        ("testEnum5", testEnum5),
+        ("testUnwrapped", testUnwrapped),
+        ("testMap", testMap),
+    ]
+    #endif
 }
