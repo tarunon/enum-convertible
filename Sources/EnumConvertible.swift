@@ -76,6 +76,23 @@ extension AnyEnum2: Equatable
 
 #endif
 
+extension Enum2Convertible {
+    public func asOptional0() -> T0? {
+        switch self.asEnum() {
+        case .case0(let x): return Optional.some(x)
+        case .case1: return Optional.none
+        }
+    }
+
+    public func asOptional1() -> T1? {
+        switch self.asEnum() {
+        case .case0: return Optional.none
+        case .case1(let x): return Optional.some(x)
+        }
+    }
+
+}
+
 public enum AnyEnum3<T0, T1, T2> {
     case case0(T0)
     case case1(T1)
@@ -171,6 +188,33 @@ extension AnyEnum3: Equatable
 {}
 
 #endif
+
+extension Enum3Convertible {
+    public func asOptional0() -> T0? {
+        switch self.asEnum() {
+        case .case0(let x): return Optional.some(x)
+        case .case1: return Optional.none
+        case .case2: return Optional.none
+        }
+    }
+
+    public func asOptional1() -> T1? {
+        switch self.asEnum() {
+        case .case0: return Optional.none
+        case .case1(let x): return Optional.some(x)
+        case .case2: return Optional.none
+        }
+    }
+
+    public func asOptional2() -> T2? {
+        switch self.asEnum() {
+        case .case0: return Optional.none
+        case .case1: return Optional.none
+        case .case2(let x): return Optional.some(x)
+        }
+    }
+
+}
 
 public enum AnyEnum4<T0, T1, T2, T3> {
     case case0(T0)
@@ -288,6 +332,45 @@ extension AnyEnum4: Equatable
 {}
 
 #endif
+
+extension Enum4Convertible {
+    public func asOptional0() -> T0? {
+        switch self.asEnum() {
+        case .case0(let x): return Optional.some(x)
+        case .case1: return Optional.none
+        case .case2: return Optional.none
+        case .case3: return Optional.none
+        }
+    }
+
+    public func asOptional1() -> T1? {
+        switch self.asEnum() {
+        case .case0: return Optional.none
+        case .case1(let x): return Optional.some(x)
+        case .case2: return Optional.none
+        case .case3: return Optional.none
+        }
+    }
+
+    public func asOptional2() -> T2? {
+        switch self.asEnum() {
+        case .case0: return Optional.none
+        case .case1: return Optional.none
+        case .case2(let x): return Optional.some(x)
+        case .case3: return Optional.none
+        }
+    }
+
+    public func asOptional3() -> T3? {
+        switch self.asEnum() {
+        case .case0: return Optional.none
+        case .case1: return Optional.none
+        case .case2: return Optional.none
+        case .case3(let x): return Optional.some(x)
+        }
+    }
+
+}
 
 public enum AnyEnum5<T0, T1, T2, T3, T4> {
     case case0(T0)
@@ -428,6 +511,59 @@ extension AnyEnum5: Equatable
 {}
 
 #endif
+
+extension Enum5Convertible {
+    public func asOptional0() -> T0? {
+        switch self.asEnum() {
+        case .case0(let x): return Optional.some(x)
+        case .case1: return Optional.none
+        case .case2: return Optional.none
+        case .case3: return Optional.none
+        case .case4: return Optional.none
+        }
+    }
+
+    public func asOptional1() -> T1? {
+        switch self.asEnum() {
+        case .case0: return Optional.none
+        case .case1(let x): return Optional.some(x)
+        case .case2: return Optional.none
+        case .case3: return Optional.none
+        case .case4: return Optional.none
+        }
+    }
+
+    public func asOptional2() -> T2? {
+        switch self.asEnum() {
+        case .case0: return Optional.none
+        case .case1: return Optional.none
+        case .case2(let x): return Optional.some(x)
+        case .case3: return Optional.none
+        case .case4: return Optional.none
+        }
+    }
+
+    public func asOptional3() -> T3? {
+        switch self.asEnum() {
+        case .case0: return Optional.none
+        case .case1: return Optional.none
+        case .case2: return Optional.none
+        case .case3(let x): return Optional.some(x)
+        case .case4: return Optional.none
+        }
+    }
+
+    public func asOptional4() -> T4? {
+        switch self.asEnum() {
+        case .case0: return Optional.none
+        case .case1: return Optional.none
+        case .case2: return Optional.none
+        case .case3: return Optional.none
+        case .case4(let x): return Optional.some(x)
+        }
+    }
+
+}
 
 
 // MARK: deprecated
